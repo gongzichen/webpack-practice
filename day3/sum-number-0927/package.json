@@ -1,0 +1,18 @@
+{
+  "name": "sum-number-0927",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "terser-webpack-plugin": "2.2.1",
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.10"
+  }
+}

@@ -1,0 +1,12 @@
+.DS_Store
+.vscode
+.idea/
+
+npm-debug.log
+node_modules/
+blog-com-3033.conf
+dist/
+build/
+
+
+.rpt2_cache/*
