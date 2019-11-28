@@ -8,6 +8,9 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+
+
+
 const setMPA = () => {
 	const entry = {};
 	const htmlWebpackPlugins = [];
