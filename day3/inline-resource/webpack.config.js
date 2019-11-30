@@ -24,7 +24,7 @@ const setMPA = () => {
 			entry[pageName] = entryFile;
 			htmlWebpackPlugins.push(
 				new HtmlWebpackPlugin({
-					inlineSource: '.css$',
+					inlineSource: '.css$', // 表明css内嵌了~
 					template: path.join(__dirname, `src/${pageName}/index.html`),
 					filename: `${pageName}.html`,
 					chunks: ['vendors', pageName],

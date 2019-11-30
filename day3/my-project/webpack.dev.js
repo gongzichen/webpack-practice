@@ -1,52 +1,53 @@
 'use strict'
 
-const glob = require('glob') // 查找文件目录、 文件
+const glob = require('glob') // 路径匹配
 const path = require('path')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')  // html 配置
-const CleanWebpackPlugin = require('clean-webpack-plugin') // dist 清理插件
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')  // webpack友好提示插件
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 const setMPA = () => {
 	const entry = {}
 	const HtmlWebpackPlugins = []
 	const entryFiles = glob.sync(path.join(__dirname, './src/*/index.js'))
-	console.log(entryFiles, '===读取文件')
-	Object.keys(entryFiles)
-		.map(index => {
-			const entryFile = entryFiles[index]
-			console.log(index,'==index')
-			const match = entryFile.match(/src\/(.*)\/index\.js/)
-			const pageName = match && match[1]
 
-			entry[pageName] = entryFile
-			HtmlWebpackPlugins.push(
-				HtmlWebpackPlugin({
-					template: path.join(__dirname, `src/${pageName}/index.html`),
-					fileName: `${pageName}.html`,
-					chunks: [pageName],
-					inject: true,
-					minify: {
-						html5: true,
-						collapseWhitespace: true,
-						preserveLineBreaks: false,
-						minifyCSS: true,
-						minifyJS: true,
-						removeComments: false
-					}
-				})
-			)
-		})
-	return { entry, HtmlWebpackPlugins }	
+	Object.keys(entryFiles).map( idx => {
+		const entryFile = entryFiles[idx]
+		const match = entryFile.match(/src\/(.*)/.js)
+		const pageName = match && match[1]
+
+		entry[pageName] = entryFile
+		HtmlWebpackPlugins.push(
+			new HtmlWebpackPlugin({
+				template: path.join(__dirname, `src/${match}/index.html`),
+				filename: `${pageName}.html`,
+				chunks: true,
+				inject: true, // 是否将js.css 插入htmk true: 插入body底部
+				minify: {
+					html5: true,
+					collapseWhitespace: true,
+					preserveLineBreaks: false,
+					minifyCSS: true,
+					minifyJS: true,
+					removeComments: false
+				}
+			})
+		)
+	})
+	return {
+		entry,
+		HtmlWebpackPlugins
+	}
 }
 
-const { entry, HtmlWebpackPlugins } = setMPA()  
+const {entry, HtmlWebpackPlugins} = setMPA()
 
 module.exports = {
 	entry: entry,
 	output: {
 		path: path.join(__dirname, 'dist'),
-		fileName: '[name].js'
+		filename: '[name].js',
 	},
 	mode: 'development',
 	module: {
@@ -74,20 +75,20 @@ module.exports = {
 				test: /.(png|jpg|gif|jpeg)$/,
 				use: [
 					{
-						loader: 'url-loader', // 内部封装 file-loader
+						loader: 'url-loader',
 						options: {
-							limit: 10240 // 小于10240 转成base64
+							limit: 10240
 						}
 					}
 				]
 			},
 			{
-				test: /.(woff|woff2|eot|ttf|otf)$/, 
-				options: 'file-loader'
+				test: /.(woff|woff2|eot|ttf|otf)$/,
+				use: 'file-loader'
 			}
 		]
 	},
-	plugins: [
+	plguins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new CleanWebpackPlugin(),
 		new FriendlyErrorsWebpackPlugin()
@@ -95,7 +96,7 @@ module.exports = {
 	devServer: {
 		contentBase: './dist',
 		hot: true,
-		status: 'errors-only'
+		state: 'errors-only'
 	},
-	devetool: 'cheap-source-map'
+	devtool: 'cheap-source-map'
 }
