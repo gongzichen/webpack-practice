@@ -16,7 +16,7 @@ const setMPA = () => {
 	const entryFiles = glob.sync(path.join(__dirname, './src/*/index-server.js'))
 	Object.keys(entryFiles).map(idx => {
 		const entryFile  = entryFiles[idx]
-		const match = entryFiles.match(/src\/(.*)index-server\.js$/)
+		const match = entryFile.match(/src\/(.*)index-server\.js$/)
 		const pageName = match && match[1]
 
 		if (pageName) {
@@ -47,6 +47,7 @@ const setMPA = () => {
 
 const { entry, htmlWebpackPlugins } = setMPA()
 
+console.log(entry, htmlWebpackPlugins)
 module.exports = {
 	entry: entry,
 	output: {
