@@ -1,0 +1,12 @@
+{
+  "name": "gc-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "gzc-pack": "./bin/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
