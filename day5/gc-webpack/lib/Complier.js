@@ -84,8 +84,12 @@ class Compiler {
 		if (isEntry) {
 			this.entryId = moduleName // 保存入口的名称
 		}
+		
+		// 解析需要改造的源码
+		let { sourceCode, dependencies } = this.parse(source, path.dirname(moduleName)) // ./src
+
 		// 将source源码进行修改 对应
-		this.modules[moduleName] = sourceCode
+		this.modules[moduleName] = sourceCode  // 拿到源码 然后 加载loader
 
 		dependencies.forEach(dep => {
 			this.buildModule(path.join(this.root, dep), false) // 附模块的加载 递归加载
